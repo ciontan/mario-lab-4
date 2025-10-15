@@ -1,3 +1,41 @@
+//using System.Collections;
+//using System.Collections.Generic;
+//using UnityEngine;
+//using TMPro;
+//using UnityEngine.SocialPlatforms.Impl;
+//
+//public class GameManagerScript : MonoBehaviour
+//{
+//    public TextMeshProUGUI finalScoreText;
+//    public GameObject gameOverUI;
+//
+//    public GameObject gameStartScore;
+//
+//    public GameObject gameStartResetButton;
+//
+//    public JumpOverGoomba jumpOverGoomba;
+//
+//    void Start()
+//    {
+//        gameOverUI.SetActive(false);
+//        gameStartResetButton.SetActive(true);
+//        gameStartScore.SetActive(true);
+//    }
+//
+//    void Update()
+//    {
+//
+//    }
+//
+//    public void gameOver()
+//    {
+//        gameOverUI.SetActive(true);
+//        gameStartResetButton.SetActive(false);
+//        gameStartScore.SetActive(false);
+//        finalScoreText.text = "Score: " + jumpOverGoomba.score.ToString();
+//    }
+//
+//}
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,28 +43,6 @@ using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
-    // Singleton Pattern
-    private static GameManager _instance;
-    public static GameManager Instance
-    {
-        get { return _instance; }
-    }
-
-    private void Awake()
-    {
-        // check if the _instance is not this, means it's been set before, return
-        if (_instance != null && _instance != this)
-        {
-            Destroy(this.gameObject);
-            return;
-        }
-
-        // otherwise, this is the first time this instance is created
-        _instance = this;
-        // add to preserve this object open scene loading
-        DontDestroyOnLoad(this.gameObject);
-    }
-
     // events
     public UnityEvent gameStart;
     public UnityEvent gameRestart;
