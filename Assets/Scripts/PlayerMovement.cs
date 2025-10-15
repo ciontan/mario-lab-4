@@ -4,7 +4,8 @@ using UnityEngine.SceneManagement;
 using UnityEngine;
 using TMPro;
 
-public class PlayerMovement : Singleton<PlayerMovement>
+// public class PlayerMovement : Singleton<PlayerMovement>
+public class PlayerMovement : MonoBehaviour
 {
     public float speed = 70;
 
@@ -37,9 +38,10 @@ public class PlayerMovement : Singleton<PlayerMovement>
     int collisionLayerMask = (1 << 3) | (1 << 6) | (1 << 7);
 
     // Start is called before the first frame update
-    public override void Awake()
+    // public override void Awake()
+    void Awake()
     {
-        base.Awake();
+        // base.Awake();
         GameManager.instance.gameRestart.AddListener(ResetGame);
     }
 
@@ -50,19 +52,19 @@ public class PlayerMovement : Singleton<PlayerMovement>
         marioBody = GetComponent<Rigidbody2D>();
         marioSprite = GetComponent<SpriteRenderer>();
         marioAnimator.SetBool("onGround", onGroundState);
-        SceneManager.activeSceneChanged += SetStartingPosition;
+        // SceneManager.activeSceneChanged += SetStartingPosition;
         Debug.Log("PlayerMovement Start called");
     }
 
-    public void SetStartingPosition(Scene current, Scene next)
-    {
-        Debug.Log($"Scene changed to: {next.name}");  // Add debug log to verify scene name
-        if (next.name == "World 1-2")  // Make sure this matches your scene name exactly
-        {
-            Debug.Log("Setting Mario position for World 1-2");
-            this.transform.position = new Vector3(-6.0f, -2.5f, 0.0f);
-        }
-    }
+    // public void SetStartingPosition(Scene current, Scene next)
+    // {
+    //     Debug.Log($"Scene changed to: {next.name}");  // Add debug log to verify scene name
+    //     if (next.name == "World 1-2")  // Make sure this matches your scene name exactly
+    //     {
+    //         Debug.Log("Setting Mario position for World 1-2");
+    //         this.transform.position = new Vector3(-6.0f, -2.5f, 0.0f);
+    //     }
+    // }
 
     void Update()
     {

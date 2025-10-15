@@ -4,7 +4,8 @@ using UnityEngine;
 using TMPro;
 using UnityEditor;
 
-public class HUDManager : Singleton<HUDManager>
+// public class HUDManager : Singleton<HUDManager>
+public class HUDManager : MonoBehaviour
 {
     private Vector3[] scoreTextPosition = {
         new Vector3(-747, 473, 0),
@@ -19,9 +20,10 @@ public class HUDManager : Singleton<HUDManager>
     public Transform restartButton;
 
     public GameObject gameOverPanel;
-    public override void Awake()
+    // public override void Awake()
+    void Awake()
     {
-        base.Awake();
+        // base.Awake();
         if (gameOverPanel != null)
         {
             gameOverPanel.SetActive(false);
