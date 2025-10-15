@@ -53,8 +53,21 @@ public class HUDManager : MonoBehaviour
     {
         // hide gameover panel
         gameOverPanel.SetActive(false);
+
+        // Force the UI elements back to their original positions with ForceLayoutImmediateRecursively
         scoreText.transform.localPosition = scoreTextPosition[0];
         restartButton.localPosition = restartButtonPosition[0];
+
+        // Force immediate layout update to ensure positions are applied
+        Canvas.ForceUpdateCanvases();
+
+        // Log positions for debugging
+        Debug.Log("GameStart: Score position set to " + scoreText.transform.localPosition);
+        Debug.Log("GameStart: Button position set to " + restartButton.localPosition);
+
+        // Make sure time scale is running
+        Time.timeScale = 1.0f;
+        Debug.Log("HUDManager GameStart called, set Time.timeScale = " + Time.timeScale);
     }
 
     public void SetScore(int score)

@@ -1101,6 +1101,7 @@ GameObject:
   - component: {fileID: 785181925}
   - component: {fileID: 785181924}
   - component: {fileID: 785181923}
+  - component: {fileID: 785181926}
   m_Layer: 5
   m_Name: RestartButton
   m_TagString: Untagged
@@ -1171,9 +1172,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 85330347}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: GameRestart
+      - m_Target: {fileID: 785181926}
+        m_TargetAssemblyTypeName: ButtonController, Assembly-CSharp
+        m_MethodName: ButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1221,6 +1222,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 785181921}
   m_CullTransparentMesh: 1
+--- !u!114 &785181926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785181921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4e6227c9ea034bfc96f34ae91f24271, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonController
 --- !u!1 &815372084
 GameObject:
   m_ObjectHideFlags: 0

@@ -135,6 +135,9 @@ public class PlayerMovement : MonoBehaviour
     }
     public void ResetGame()
     {
+        // Ensure the player is alive
+        alive = true;
+
         // reset position
         marioBody.transform.position = new Vector3(-5.33f, -2.36f, 0.0f);
         // reset sprite direction
@@ -143,10 +146,13 @@ public class PlayerMovement : MonoBehaviour
 
         // reset animation
         marioAnimator.SetTrigger("gameRestart");
-        alive = true;
 
         // reset camera position
         gameCamera.position = new Vector3(0, 0, -10);
+
+        // Ensure time scale is set
+        Time.timeScale = 1.0f;
+        Debug.Log("PlayerMovement ResetGame called, set Time.timeScale = " + Time.timeScale);
     }
 
     void FlipMarioSprite(int value)
