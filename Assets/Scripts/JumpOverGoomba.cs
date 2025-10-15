@@ -11,30 +11,15 @@ public class JumpOverGoomba : MonoBehaviour
     private bool jumpInProgress = false;
     private bool isCollidingWithObstacle = false;
 
-    //[System.NonSerialized]
-    //public int score = 0; // we don't want this to show up in the inspector
-
     private bool countScoreState = false;
     public Vector3 boxSize;
     public float maxDistance;
     public LayerMask layerMask;
-    // Start is called before the first frame update
-    //public TextMeshProUGUI finalScoreText;
-    //public GameObject gameOverUI;
-
-    //public GameObject gameStartScore;
-
-    //public GameObject gameStartResetButton;
-
-    //public JumpOverGoomba jumpOverGoomba;
     public GameManager gameManager;
 
     void Start()
     {
-        //gameOverUI.SetActive(false);
-        //gameStartResetButton.SetActive(true);
-        //gameStartScore.SetActive(true);
-        gameManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<GameManager>();
+        gameManager = GameManager.Instance;
     }
 
     // Update is called once per frame
@@ -52,29 +37,8 @@ public class JumpOverGoomba : MonoBehaviour
         }
     }
 
-    //public void gameOver()
-    //{
-    //    Debug.Log("gameover triggered");
-    //    gameOverUI.SetActive(true);
-    //    gameStartResetButton.SetActive(false);
-    //    gameStartScore.SetActive(false);
-    //    finalScoreText.text = "Score: " + jumpOverGoomba.score.ToString();
-    //}
-
     void FixedUpdate()
     {
-        //// when jumping, and Goomba is near Mario and we haven't registered our score
-        //if (jumpInProgress && countScoreState)
-        //{
-        //    if (Mathf.Abs(transform.position.x - enemyLocation.position.x) < 0.5f)
-        //    {
-        //        countScoreState = false;
-        //        score++;
-        //        scoreText.text = "Score: " + score.ToString();
-        //        Debug.Log(score);
-        //    }
-        //}
-
         // No longer increase score when jumping over Goomba
         if (!onGroundState && countScoreState)
         {

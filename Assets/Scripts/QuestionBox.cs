@@ -71,7 +71,7 @@ public class QuestionBox : MonoBehaviour
             if (coinScript != null)
                 coinScript.Animate();
             // Increase score and specify it's from a coin (true)
-            gameManager.IncreaseScore(1, true);
+            GameManager.Instance.IncreaseScore(1, true);
             Destroy(coinObj, 1f); // coin disappears after 1s
 
         }
