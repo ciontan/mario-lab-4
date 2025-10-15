@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEditor;
 
+// public class HUDManager : Singleton<HUDManager>
 public class HUDManager : MonoBehaviour
 {
     private Vector3[] scoreTextPosition = {
@@ -19,9 +20,27 @@ public class HUDManager : MonoBehaviour
     public Transform restartButton;
 
     public GameObject gameOverPanel;
-    // Start is called before the first frame update
+    // public override void Awake()
+    void Awake()
+    {
+        // base.Awake();
+        if (gameOverPanel != null)
+        {
+            gameOverPanel.SetActive(false);
+        }
+    }
+
     void Start()
     {
+        // Make sure GameManager exists and subscribe to its events
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.gameStart.AddListener(GameStart);
+            GameManager.instance.gameOver.AddListener(GameOver);
+            GameManager.instance.gameRestart.AddListener(GameStart);
+            GameManager.instance.scoreChange.AddListener(SetScore);
+            GameStart(); // Set initial state
+        }
     }
 
     // Update is called once per frame
@@ -34,8 +53,21 @@ public class HUDManager : MonoBehaviour
     {
         // hide gameover panel
         gameOverPanel.SetActive(false);
+
+        // Force the UI elements back to their original positions with ForceLayoutImmediateRecursively
         scoreText.transform.localPosition = scoreTextPosition[0];
         restartButton.localPosition = restartButtonPosition[0];
+
+        // Force immediate layout update to ensure positions are applied
+        Canvas.ForceUpdateCanvases();
+
+        // Log positions for debugging
+        Debug.Log("GameStart: Score position set to " + scoreText.transform.localPosition);
+        Debug.Log("GameStart: Button position set to " + restartButton.localPosition);
+
+        // Make sure time scale is running
+        Time.timeScale = 1.0f;
+        Debug.Log("HUDManager GameStart called, set Time.timeScale = " + Time.timeScale);
     }
 
     public void SetScore(int score)

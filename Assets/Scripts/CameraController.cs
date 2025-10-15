@@ -14,6 +14,9 @@ public class CameraController : MonoBehaviour
 
     void Start()
     {
+        // Find Mario in the current scene
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+
         // get coordinate of the bottomleft of the viewport
         // z doesn't matter since the camera is orthographic
         Vector3 bottomLeft = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)); // the z-component is the distance of the resulting plane from the camera 
@@ -22,12 +25,12 @@ public class CameraController : MonoBehaviour
         startX = this.transform.position.x;
         endX = endLimit.transform.position.x - viewportHalfWidth;
     }
-    
-    void  Update()
+
+    void Update()
     {
-        float desiredX =  player.position.x  +  offset;
+        float desiredX = player.position.x + offset;
         // check if desiredX is within startX and endX
-        if (desiredX  >  startX  &&  desiredX  <  endX)
-        this.transform.position  =  new  Vector3(desiredX, this.transform.position.y, this.transform.position.z);
+        if (desiredX > startX && desiredX < endX)
+            this.transform.position = new Vector3(desiredX, this.transform.position.y, this.transform.position.z);
     }
 }

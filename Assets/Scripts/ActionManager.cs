@@ -5,6 +5,13 @@ using UnityEngine.InputSystem;
 
 public class ActionManager : MonoBehaviour
 {
+    public static ActionManager instance; // Simple singleton pattern without DontDestroyOnLoad
+
+    void Awake()
+    {
+        instance = this;
+    }
+
     public UnityEvent jump;
     public UnityEvent jumpHold;
     public UnityEvent<int> moveCheck;
