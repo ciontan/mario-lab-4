@@ -1,62 +1,26 @@
-//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
-//using TMPro;
-//using UnityEngine.SocialPlatforms.Impl;
-//
-//public class GameManagerScript : MonoBehaviour
-//{
-//    public TextMeshProUGUI finalScoreText;
-//    public GameObject gameOverUI;
-//
-//    public GameObject gameStartScore;
-//
-//    public GameObject gameStartResetButton;
-//
-//    public JumpOverGoomba jumpOverGoomba;
-//
-//    void Start()
-//    {
-//        gameOverUI.SetActive(false);
-//        gameStartResetButton.SetActive(true);
-//        gameStartScore.SetActive(true);
-//    }
-//
-//    void Update()
-//    {
-//
-//    }
-//
-//    public void gameOver()
-//    {
-//        gameOverUI.SetActive(true);
-//        gameStartResetButton.SetActive(false);
-//        gameStartScore.SetActive(false);
-//        finalScoreText.text = "Score: " + jumpOverGoomba.score.ToString();
-//    }
-//
-//}
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
-    // events
-    public UnityEvent gameStart;
-    public UnityEvent gameRestart;
-    public UnityEvent<int> scoreChange;
-    public UnityEvent gameOver;
+    // Initialize events right away
+    public UnityEvent gameStart = new UnityEvent();
+    public UnityEvent gameRestart = new UnityEvent();
+    public UnityEvent<int> scoreChange = new UnityEvent<int>();
+    public UnityEvent gameOver = new UnityEvent();
 
     private int score = 0;
-
-    // Reference to CoinAudioController
     private CoinAudioController coinAudioController;
+
+    public override void Awake()
+    {
+        base.Awake();
+    }
 
     void Start()
     {
-        gameStart.Invoke();
         Time.timeScale = 1.0f;
 
         // Get or add CoinAudioController
@@ -66,6 +30,8 @@ public class GameManager : MonoBehaviour
             coinAudioController = gameObject.AddComponent<CoinAudioController>();
             Debug.Log("Added CoinAudioController to GameManager");
         }
+
+        gameStart.Invoke();
     }
 
     // Update is called once per frame

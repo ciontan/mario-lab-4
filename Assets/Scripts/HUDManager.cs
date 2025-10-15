@@ -19,9 +19,26 @@ public class HUDManager : Singleton<HUDManager>
     public Transform restartButton;
 
     public GameObject gameOverPanel;
-    // Start is called before the first frame update
+    public override void Awake()
+    {
+        base.Awake();
+        if (gameOverPanel != null)
+        {
+            gameOverPanel.SetActive(false);
+        }
+    }
+
     void Start()
     {
+        // Make sure GameManager exists and subscribe to its events
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.gameStart.AddListener(GameStart);
+            GameManager.instance.gameOver.AddListener(GameOver);
+            GameManager.instance.gameRestart.AddListener(GameStart);
+            GameManager.instance.scoreChange.AddListener(SetScore);
+            GameStart(); // Set initial state
+        }
     }
 
     // Update is called once per frame

@@ -12,7 +12,7 @@ public class PlayerMovement : Singleton<PlayerMovement>
     public float jumpForce = 30f;
     public float holdForce = 10f;
     public float maxJumpVelocity = 20f;
-    private bool isJumping = false;
+    // Removed unused isJumping field
     private bool onGroundState = true;
     private Rigidbody2D marioBody;
     private SpriteRenderer marioSprite;
@@ -40,7 +40,7 @@ public class PlayerMovement : Singleton<PlayerMovement>
     public override void Awake()
     {
         base.Awake();
-        Debug.Log("PlayerMovement Awake called");
+        GameManager.instance.gameRestart.AddListener(ResetGame);
     }
 
     void Start()
@@ -94,7 +94,7 @@ public class PlayerMovement : Singleton<PlayerMovement>
     void GameOverScene()
     {
         Debug.Log("gameover scene called in playermovemetn");
-        gameManager.GameOver();
+        GameManager.instance.GameOver();
 
         //// stop time
         //Time.timeScale = 0.0f;
@@ -118,53 +118,6 @@ public class PlayerMovement : Singleton<PlayerMovement>
         if (alive && moving)
         {
             Move(faceRightState == true ? 1 : -1);
-            //float moveHorizontal = Input.GetAxisRaw("Horizontal");
-
-            //if (Mathf.Abs(moveHorizontal) > 0)
-            //{
-            //    Vector2 movement = new Vector2(moveHorizontal, 0);
-            //    // check if it doesn't go beyond maxSpeed
-            //    if (marioBody.linearVelocity.magnitude < maxSpeed)
-            //        marioBody.AddForce(movement * speed);
-            //}
-            //
-            // stop
-            //if (Input.GetKeyUp("a") || Input.GetKeyUp("d"))
-            //{
-            //    // stop
-            //    marioBody.linearVelocity = Vector2.zero;
-            //}
-
-
-            // Making the jump more like the actual mario game
-            // Start jump
-
-            //if (Input.GetKeyDown("space") && onGroundState)
-            //{
-            //    marioBody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-            //    onGroundState = false;
-            //    isJumping = true;
-            //    marioAnimator.SetBool("onGround", onGroundState);
-            //}
-            //
-            //// Hold jump: apply smaller force while rising
-            //if (Input.GetKey("space") && isJumping)
-            //{
-            //    if (marioBody.linearVelocity.y > 0 && marioBody.linearVelocity.y < maxJumpVelocity)
-            //    {
-            //        marioBody.AddForce(Vector2.up * holdForce, ForceMode2D.Force);
-            //    }
-            //}
-            //
-            //// Short hop: if released early, cut upward velocity
-            //if (Input.GetKeyUp("space"))
-            //{
-            //    if (marioBody.linearVelocity.y > 0)
-            //    {
-            //        marioBody.linearVelocity = new Vector2(marioBody.linearVelocity.x, marioBody.linearVelocity.y * 0.25f);
-            //    }
-            //    isJumping = false;
-            //}
         }
 
     }
@@ -178,35 +131,6 @@ public class PlayerMovement : Singleton<PlayerMovement>
         // resume time
         Time.timeScale = 1.0f;
     }
-
-    //public void ResetGame()
-    //{
-    //    // reset position
-    //    marioBody.transform.position = new Vector3(-5.00f, -2.50f, 0.0f);
-    //    // reset sprite direction
-    //    faceRightState = true;
-    //    marioSprite.flipX = false;
-    //    // reset score
-    //    //scoreText.text = "Score: 0";
-    //    // reset Goomba
-    //    foreach (Transform eachChild in enemies.transform)
-    //    {
-    //        eachChild.localPosition = eachChild.GetComponent<EnemyMovement>().startPosition;
-    //    }
-    //    // reset score
-    //    jumpOverGoomba.score = 0;
-    //    jumpOverGoomba.gameOverUI.SetActive(false);
-    //    jumpOverGoomba.gameStartResetButton.SetActive(true);
-    //    jumpOverGoomba.gameStartScore.SetActive(true);
-    //    // reset animation
-    //    marioAnimator.SetTrigger("gameRestart");
-    //    alive = true;
-    //    gameCamera.position = new Vector3(0, 0, -1);
-    //
-    //    //Scene currentScene = SceneManager.GetActiveScene();
-    //    //SceneManager.LoadScene(currentScene.name);
-    //}
-
     public void ResetGame()
     {
         // reset position
@@ -274,7 +198,6 @@ public class PlayerMovement : Singleton<PlayerMovement>
             marioBody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             onGroundState = false;
             jumpedState = true;
-            isJumping = true;
             // update animator state
             marioAnimator.SetBool("onGround", onGroundState);
 
@@ -288,7 +211,6 @@ public class PlayerMovement : Singleton<PlayerMovement>
             // jump higher
             marioBody.AddForce(Vector2.up * jumpForce * 30, ForceMode2D.Force);
             jumpedState = false;
-            isJumping = false;
 
         }
     }
