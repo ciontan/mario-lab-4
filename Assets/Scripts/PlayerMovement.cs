@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine;
 using TMPro;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : Singleton<PlayerMovement>
 {
     public float speed = 70;
 
@@ -37,6 +37,12 @@ public class PlayerMovement : MonoBehaviour
     int collisionLayerMask = (1 << 3) | (1 << 6) | (1 << 7);
 
     // Start is called before the first frame update
+    public override void Awake()
+    {
+        base.Awake();
+        Debug.Log("PlayerMovement Awake called");
+    }
+
     void Start()
     {
         // Set to be 30 FPS
@@ -44,41 +50,22 @@ public class PlayerMovement : MonoBehaviour
         marioBody = GetComponent<Rigidbody2D>();
         marioSprite = GetComponent<SpriteRenderer>();
         marioAnimator.SetBool("onGround", onGroundState);
-        //marioAnimator.SetTrigger("gameRestart");
-        //alive = true;
+        SceneManager.activeSceneChanged += SetStartingPosition;
+        Debug.Log("PlayerMovement Start called");
+    }
+
+    public void SetStartingPosition(Scene current, Scene next)
+    {
+        Debug.Log($"Scene changed to: {next.name}");  // Add debug log to verify scene name
+        if (next.name == "World 1-2")  // Make sure this matches your scene name exactly
+        {
+            Debug.Log("Setting Mario position for World 1-2");
+            this.transform.position = new Vector3(-6.0f, -2.5f, 0.0f);
+        }
     }
 
     void Update()
     {
-        //float moveHorizontal = Input.GetAxisRaw("Horizontal");
-        //if (moveHorizontal < 0 && faceRightState)
-        //{
-        //    faceRightState = false;
-        //    //marioSprite.flipX = true;
-        //}
-        //
-        //if (moveHorizontal > 0 && !faceRightState)
-        //{
-        //    faceRightState = true;
-        //    //marioSprite.flipX = false;
-        //}
-        //
-        //if (Input.GetKeyDown("a") && faceRightState)
-        //{
-        //    faceRightState = false;
-        //    //marioSprite.flipX = true;
-        //    if (marioBody.linearVelocity.x > 0.1f)
-        //        marioAnimator.SetTrigger("onSkid");
-        //}
-        //
-        //if (Input.GetKeyDown("d") && !faceRightState)
-        //{
-        //    faceRightState = true;
-        //    //marioSprite.flipX = false;
-        //    if (marioBody.linearVelocity.x < -0.1f)
-        //        marioAnimator.SetTrigger("onSkid");
-        //}
-
         marioAnimator.SetFloat("xSpeed", Mathf.Abs(marioBody.linearVelocity.x));
     }
 
