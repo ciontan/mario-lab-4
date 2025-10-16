@@ -12,9 +12,9 @@ public class PlayerMovement : MonoBehaviour
     //float upSpeed;
     //float maxSpeed;
     //float speed;
-    float speed;
-    float maxSpeed;
-    float jumpForce;
+    public float speed;
+    public float maxSpeed;
+    public float jumpForce;
     public float holdForce = 10f;
     public float maxJumpVelocity = 20f;
     // Removed unused isJumping field
@@ -35,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
     [System.NonSerialized]
     public bool alive = true;
     public AudioSource marioDeathAudio;
-    float deathImpulse;
+    public float deathImpulse;
     private bool moving = false;
     private bool jumpedState = false;
     public Transform gameCamera;
