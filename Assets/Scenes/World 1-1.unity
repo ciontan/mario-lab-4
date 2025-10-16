@@ -3123,6 +3123,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1706015323 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1401986001141339300, guid: 9ebd6812f2e9d9c4da781ef892529095, type: 3}
+  m_PrefabInstance: {fileID: 7343536642446088786}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1706015330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1706015323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1779d39a6e6e94fcbb79938370a6c398, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Goomba
+  flatSprite: {fileID: -425582989, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
 --- !u!1 &1802562965
 GameObject:
   m_ObjectHideFlags: 0
@@ -3590,7 +3608,6 @@ GameObject:
   - component: {fileID: 1884124052}
   - component: {fileID: 1884124054}
   - component: {fileID: 1884124057}
-  - component: {fileID: 1884124058}
   - component: {fileID: 1884124059}
   - component: {fileID: 1884124060}
   - component: {fileID: 1884124055}
@@ -3774,25 +3791,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.82970536, y: 1.0160247}
   m_EdgeRadius: 0
---- !u!114 &1884124058
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1884124051}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b58a567ab4c2f4d73977c5703656b73e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::JumpOverGoomba
-  enemyLocation: {fileID: 991428313}
-  boxSize: {x: 0.5, y: 1, z: 0}
-  maxDistance: 0.5
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 8
-  gameManager: {fileID: 85330347}
 --- !u!95 &1884124059
 Animator:
   serializedVersion: 7
@@ -4952,7 +4950,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1401986001141339300, guid: 9ebd6812f2e9d9c4da781ef892529095, type: 3}
       propertyPath: m_Name
-      value: Goomba_left
+      value: Goomba
       objectReference: {fileID: 0}
     - target: {fileID: 2631090020817804903, guid: 9ebd6812f2e9d9c4da781ef892529095, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4994,10 +4992,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3777157513458325502, guid: 9ebd6812f2e9d9c4da781ef892529095, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4286405467624067184, guid: 9ebd6812f2e9d9c4da781ef892529095, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1401986001141339300, guid: 9ebd6812f2e9d9c4da781ef892529095, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1706015330}
   m_SourcePrefab: {fileID: 100100000, guid: 9ebd6812f2e9d9c4da781ef892529095, type: 3}
 --- !u!1001 &8631540037914571509
 PrefabInstance:

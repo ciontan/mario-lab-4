@@ -3,6 +3,15 @@ using UnityEngine;
 public class Goomba : MonoBehaviour
 {
     public Sprite flatSprite;
+    public AudioClip deathSound; // Assign in Inspector
+    private AudioSource audioSource;
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+            audioSource = gameObject.AddComponent<AudioSource>();
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -17,13 +26,17 @@ public class Goomba : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Shell")) {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Shell"))
+        {
             Hit();
         }
     }
 
     private void Flatten()
     {
+        if (deathSound != null && audioSource != null)
+            audioSource.PlayOneShot(deathSound);
+
         GetComponent<Collider2D>().enabled = false;
         GetComponent<EnemyMovement>().enabled = false;
         GetComponent<AnimatedSprite>().enabled = false;
@@ -33,6 +46,9 @@ public class Goomba : MonoBehaviour
 
     private void Hit()
     {
+        if (deathSound != null && audioSource != null)
+            audioSource.PlayOneShot(deathSound);
+
         GetComponent<AnimatedSprite>().enabled = false;
         GetComponent<DeathAnimation>().enabled = true;
         Destroy(gameObject, 3f);
