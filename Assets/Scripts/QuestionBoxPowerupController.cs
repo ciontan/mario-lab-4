@@ -72,8 +72,8 @@ public class QuestionBoxPowerupController : MonoBehaviour, IPowerupController
             // Trigger powerup animation
             powerupAnimator.SetTrigger("spawned");
 
-            // Wait for animation to finish (adjust time based on your animation length)
-            yield return new WaitForSeconds(0.5f);
+            // // Wait for animation to finish (adjust time based on your animation length)
+            // yield return new WaitForSeconds(0.5f);
 
             // Now spawn the powerup (this will make it move)
             powerup.SpawnPowerup();
