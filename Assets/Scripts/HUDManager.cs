@@ -58,6 +58,8 @@ public class HUDManager : MonoBehaviour
         // Force the UI elements back to their original positions with ForceLayoutImmediateRecursively
         scoreText.transform.localPosition = scoreTextPosition[0];
         restartButtonObj.transform.localPosition = restartButtonPosition[0];
+        if (restartButtonObj != null) restartButtonObj.SetActive(true);
+        if (pauseButtonObj != null) pauseButtonObj.SetActive(true);
 
         // Force immediate layout update to ensure positions are applied
         Canvas.ForceUpdateCanvases();

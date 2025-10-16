@@ -75,8 +75,8 @@ public class GameManager : Singleton<GameManager>
         if (coinAudioController != null)
             coinAudioController.ResetCoinCount();
 
-        // Reset all QuestionBoxes
-        foreach (var box in FindObjectsByType<QuestionBox>(FindObjectsSortMode.None))
+        // Reset all QuestionBoxPowerupControllers
+        foreach (var box in FindObjectsByType<QuestionBoxPowerupController>(FindObjectsSortMode.None))
         {
             box.ResetBox();
         }
@@ -84,6 +84,11 @@ public class GameManager : Singleton<GameManager>
         foreach (var brick in FindObjectsByType<BoxBrick>(FindObjectsSortMode.None))
         {
             brick.ResetBox();
+        }
+        // Reset all MagicMushroomPowerups
+        foreach (var mushroom in FindObjectsByType<MagicMushroomPowerup>(FindObjectsSortMode.None))
+        {
+            mushroom.ResetPowerup();
         }
 
         gameRestart.Invoke();

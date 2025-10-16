@@ -8,6 +8,8 @@ public class QuestionBoxPowerupController : MonoBehaviour, IPowerupController
     [SerializeField] private Sprite usedSprite;     // sprite for after box is used
     [SerializeField] private Sprite unusedSprite;   // sprite for before box is used
 
+    public GameObject mushroom;
+
     public BasePowerup powerup; // reference to this question box's powerup
     public Animator powerupAnimator;
 
@@ -19,6 +21,7 @@ public class QuestionBoxPowerupController : MonoBehaviour, IPowerupController
     {
         sr = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
+        GameManager.instance.gameRestart.AddListener(ResetBox);
     }
 
     void OnCollisionEnter2D(Collision2D col)
@@ -61,7 +64,7 @@ public class QuestionBoxPowerupController : MonoBehaviour, IPowerupController
             sr.sprite = usedSprite;
 
         // First trigger the box animation
-        this.GetComponent<Animator>().SetTrigger("spawned");
+        mushroom.GetComponent<Animator>().SetTrigger("spawned");
 
         // Enable the powerup GameObject but don't spawn it yet
         if (powerup != null && !powerup.hasSpawned)
@@ -92,6 +95,28 @@ public class QuestionBoxPowerupController : MonoBehaviour, IPowerupController
             sr.sprite = unusedSprite;
         if (rb != null)
             rb.bodyType = RigidbodyType2D.Dynamic;
+
+        // Reset mushroom animation trigger
+        if (mushroom != null)
+        {
+            Animator mushroomAnimator = mushroom.GetComponent<Animator>();
+            if (mushroomAnimator != null)
+            {
+                mushroomAnimator.ResetTrigger("spawned");
+            }
+        }
+
+        // Reset powerup animation trigger
+        if (powerupAnimator != null)
+        {
+            powerupAnimator.ResetTrigger("spawned");
+        }
+
+        if (powerup != null)
+        {
+            powerup.ResetPowerup();
+            powerup.gameObject.SetActive(false); // Make sure it's hidden initially
+        }
     }
 
     // Implementation of IPowerupController

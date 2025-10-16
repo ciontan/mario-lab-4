@@ -10,7 +10,8 @@ public abstract class BasePowerup : MonoBehaviour, IPowerup
     protected Rigidbody2D rigidBody;
 
     // base methods
-    protected virtual void Start(){
+    protected virtual void Start()
+    {
         rigidBody = GetComponent<Rigidbody2D>();
     }
 
@@ -36,8 +37,14 @@ public abstract class BasePowerup : MonoBehaviour, IPowerup
     {
         Destroy(this.gameObject);
     }
+    public virtual void ResetPowerup()
+    {
+
+    }
+
 
     // 2. abstract methods, must be implemented by derived classes
     public abstract void SpawnPowerup();
     public abstract void ApplyPowerup(MonoBehaviour i);
+
 }

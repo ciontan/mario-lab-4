@@ -718,6 +718,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5235620371439902770, guid: 2701be5c5f8a04390a2ac3c9578d617e, type: 3}
+      propertyPath: m_TagString
+      value: Powerup
+      objectReference: {fileID: 0}
     - target: {fileID: 8644592218162771492, guid: 2701be5c5f8a04390a2ac3c9578d617e, type: 3}
       propertyPath: useInt.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

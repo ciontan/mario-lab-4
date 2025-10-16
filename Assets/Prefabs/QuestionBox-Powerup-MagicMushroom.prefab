@@ -497,6 +497,7 @@ MonoBehaviour:
     m_Bits: 1
   usedSprite: {fileID: 856321756, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
   unusedSprite: {fileID: -1225447665, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
+  mushroom: {fileID: 5235620371439902770}
   powerup: {fileID: 8933635787081790647}
   powerupAnimator: {fileID: 5099936819098112194}
 --- !u!1 &5235620371439902770
