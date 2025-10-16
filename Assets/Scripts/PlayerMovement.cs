@@ -81,31 +81,38 @@ public class PlayerMovement : MonoBehaviour
         marioBody.AddForce(Vector2.up * deathImpulse, ForceMode2D.Impulse);
     }
 
+    // Removed death logic from OnTriggerEnter2D. Mario only dies in OnCollisionEnter2D based on collision direction.
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
-        {
-            Debug.Log("Collided with goomba!");
-            marioAnimator.Play("mario-die");
-            marioDeathAudio.PlayOneShot(marioDeathAudio.clip);
-            alive = false;
-        }
+
     }
 
     void GameOverScene()
     {
         Debug.Log("gameover scene called in playermovemetn");
         GameManager.instance.GameOver();
-
-        //// stop time
-        //Time.timeScale = 0.0f;
-        //// set gameover scene
-        //jumpOverGoomba.gameOver();
     }
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (((collisionLayerMask & (1 << col.transform.gameObject.layer)) > 0) & !onGroundState)
+        if (col.gameObject.CompareTag("Enemy"))
+        {
+            // Bounce off enemy head
+            if (col.contacts.Length > 0 && col.contacts[0].normal.y > 0.5f)
+            {
+                marioBody.AddForce(Vector2.up * (jumpForce / 2f), ForceMode2D.Impulse);
+                jumpedState = true;
+            }
+            else
+            {
+                // Mario dies if hit from the side or below
+                Debug.Log("Collided with goomba!");
+                marioAnimator.Play("mario-die");
+                marioDeathAudio.PlayOneShot(marioDeathAudio.clip);
+                alive = false;
+            }
+        }
+        else if (((collisionLayerMask & (1 << col.transform.gameObject.layer)) > 0) & !onGroundState)
         {
             onGroundState = true;
             // update animator state
