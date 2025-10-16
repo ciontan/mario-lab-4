@@ -1,4 +1,3 @@
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,10 +28,20 @@ public class PauseButtonController : MonoBehaviour, IInteractiveButton
         if (isPaused)
         {
             image.sprite = playIcon;
+            // Pause all audio sources
+            foreach (var audio in FindObjectsByType<AudioSource>(FindObjectsSortMode.None))
+            {
+                audio.Pause();
+            }
         }
         else
         {
             image.sprite = pauseIcon;
+            // Unpause all audio sources
+            foreach (var audio in FindObjectsByType<AudioSource>(FindObjectsSortMode.None))
+            {
+                audio.UnPause();
+            }
         }
     }
 }
