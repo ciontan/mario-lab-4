@@ -15,6 +15,7 @@ public class GameManager : Singleton<GameManager>
 
     private int score = 0;
     private CoinAudioController coinAudioController;
+    public IntVariable gameScore;
 
     public override void Awake()
     {
@@ -69,6 +70,7 @@ public class GameManager : Singleton<GameManager>
     {
         // reset score
         score = 0;
+        gameScore.Value = 0;
         SetScore(score);
 
         // Reset coin audio
@@ -93,7 +95,9 @@ public class GameManager : Singleton<GameManager>
     // Use this overload to specify if the score increase is from a coin
     public void IncreaseScore(int increment, bool isCoin = false)
     {
+        Debug.Log("increasing score by " + increment);
         score += increment;
+        gameScore.ApplyChange(1);
 
         // Play coin sound only if it's from a coin
         if (isCoin && coinAudioController != null)
@@ -106,6 +110,7 @@ public class GameManager : Singleton<GameManager>
 
     public void SetScore(int score)
     {
+        //scoreChange.Invoke(gameScore.Value);
         scoreChange.Invoke(score);
     }
 

@@ -22,6 +22,9 @@ public class HUDManager : MonoBehaviour
 
     public GameObject gameOverPanel;
     // public override void Awake()
+    
+    public GameObject highscoreText;
+    public IntVariable gameScore;
     void Awake()
     {
         // base.Awake();
@@ -84,5 +87,9 @@ public class HUDManager : MonoBehaviour
         restartButtonObj.transform.localPosition = restartButtonPosition[1];
         if (restartButtonObj != null) restartButtonObj.SetActive(false);
         if (pauseButtonObj != null) pauseButtonObj.SetActive(false);
+        // set highscore
+        highscoreText.GetComponent<TextMeshProUGUI>().text = "TOP- " + gameScore.previousHighestValue.ToString("D6");
+        // show
+        highscoreText.SetActive(true);
     }
 }
