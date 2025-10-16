@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: IntVariable
   m_EditorClassIdentifier: Assembly-CSharp::IntVariable
   DeveloperDescription: this is a variable scrriptable object thingy test
-  previousHighestValue: 0
+  previousHighestValue: 6
