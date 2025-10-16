@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -21,8 +23,10 @@ public class GameManager : Singleton<GameManager>
 
     void Start()
     {
-        Time.timeScale = 1.0f;
 
+        gameStart.Invoke();
+        Time.timeScale = 1.0f;
+        SceneManager.activeSceneChanged += SceneSetup;
         // Get or add CoinAudioController
         coinAudioController = GetComponent<CoinAudioController>();
         if (coinAudioController == null)
@@ -30,9 +34,14 @@ public class GameManager : Singleton<GameManager>
             coinAudioController = gameObject.AddComponent<CoinAudioController>();
             Debug.Log("Added CoinAudioController to GameManager");
         }
-
-        gameStart.Invoke();
     }
+
+    public void SceneSetup(Scene current, Scene next)
+    {
+        gameStart.Invoke();
+        SetScore(score);
+    }
+
 
     // Update is called once per frame
     void Update()
