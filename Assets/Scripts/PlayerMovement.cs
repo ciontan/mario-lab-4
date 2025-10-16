@@ -7,10 +7,14 @@ using TMPro;
 // public class PlayerMovement : Singleton<PlayerMovement>
 public class PlayerMovement : MonoBehaviour
 {
-    public float speed = 70;
-
-    public float maxSpeed = 80;
-    public float jumpForce = 30f;
+    public GameConstants gameConstants;
+    //float deathImpulse;
+    //float upSpeed;
+    //float maxSpeed;
+    //float speed;
+    float speed;
+    float maxSpeed;
+    float jumpForce;
     public float holdForce = 10f;
     public float maxJumpVelocity = 20f;
     // Removed unused isJumping field
@@ -31,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
     [System.NonSerialized]
     public bool alive = true;
     public AudioSource marioDeathAudio;
-    public float deathImpulse = 15;
+    float deathImpulse;
     private bool moving = false;
     private bool jumpedState = false;
     public Transform gameCamera;
@@ -49,6 +53,11 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
+        // Set constants
+        speed = gameConstants.speed;
+        maxSpeed = gameConstants.maxSpeed;
+        deathImpulse = gameConstants.deathImpulse;
+        jumpForce = gameConstants.upSpeed;
         // Set to be 30 FPS
         Application.targetFrameRate = 30;
         // Only add the restart listener in Start, not Awake
