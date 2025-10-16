@@ -1,12 +1,12 @@
 using System.Collections;
 using UnityEngine;
 
-public class ButtonController : MonoBehaviour
+public class RestartButtonController : MonoBehaviour, IInteractiveButton
 {
     public void ButtonClick()
     {
         // Hide the game over panel
-        HUDManager hudManager = FindObjectOfType<HUDManager>();
+        HUDManager hudManager = FindFirstObjectByType<HUDManager>();
         if (hudManager != null)
         {
             if (hudManager.gameOverPanel != null)

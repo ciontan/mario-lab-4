@@ -38,8 +38,24 @@ public class GameManager : Singleton<GameManager>
 
     public void SceneSetup(Scene current, Scene next)
     {
-        gameStart.Invoke();
-        SetScore(score);
+        // Wait for next frame to ensure new scene is fully loaded
+        StartCoroutine(SetupNewScene());
+    }
+
+    private IEnumerator SetupNewScene()
+    {
+        // Wait for the next frame to ensure new scene objects are initialized
+        yield return null;
+
+        // Find and setup the new HUD
+        var hud = FindFirstObjectByType<HUDManager>();
+        if (hud != null)
+        {
+            // Force a score update
+            SetScore(score);
+            // Trigger game start to setup UI positions
+            gameStart.Invoke();
+        }
     }
 
 
@@ -58,6 +74,17 @@ public class GameManager : Singleton<GameManager>
         // Reset coin audio
         if (coinAudioController != null)
             coinAudioController.ResetCoinCount();
+
+        // Reset all QuestionBoxes
+        foreach (var box in FindObjectsByType<QuestionBox>(FindObjectsSortMode.None))
+        {
+            box.ResetBox();
+        }
+        // Reset all BoxBricks
+        foreach (var brick in FindObjectsByType<BoxBrick>(FindObjectsSortMode.None))
+        {
+            brick.ResetBox();
+        }
 
         gameRestart.Invoke();
         Time.timeScale = 1.0f;

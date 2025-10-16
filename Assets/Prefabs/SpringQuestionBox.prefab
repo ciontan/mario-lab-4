@@ -407,5 +407,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   usedSprite: {fileID: 856321756, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
+  unusedSprite: {fileID: -1225447665, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
   coinPrefab: {fileID: 1389042195643733043, guid: 6247608293ed943ddbb6ab746c3a901e, type: 3}
   gameManager: {fileID: 0}

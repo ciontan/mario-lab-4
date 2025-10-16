@@ -7,6 +7,7 @@ public class QuestionBox : MonoBehaviour
     [SerializeField] private LayerMask playerMask;  // layer for Mario
 
     [SerializeField] private Sprite usedSprite;     // sprite for after box is used
+    [SerializeField] private Sprite unusedSprite;   // sprite for before box is used
     [SerializeField] private GameObject coinPrefab; // prefab to spawn
 
     private SpriteRenderer sr;
@@ -80,5 +81,14 @@ public class QuestionBox : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         // Disable spring by freezing
         rb.bodyType = RigidbodyType2D.Static;
+    }
+
+    public void ResetBox()
+    {
+        used = false;
+        if (sr != null && unusedSprite != null)
+            sr.sprite = unusedSprite;
+        if (rb != null)
+            rb.bodyType = RigidbodyType2D.Dynamic;
     }
 }
