@@ -42,18 +42,17 @@ public class PlayerMovement : MonoBehaviour
     void Awake()
     {
         // base.Awake();
-        GameManager.instance.gameRestart.AddListener(ResetGame);
+        marioBody = GetComponent<Rigidbody2D>();
+        marioSprite = GetComponent<SpriteRenderer>();
+        marioAnimator.SetBool("onGround", onGroundState);
     }
 
     void Start()
     {
         // Set to be 30 FPS
         Application.targetFrameRate = 30;
-        marioBody = GetComponent<Rigidbody2D>();
-        marioSprite = GetComponent<SpriteRenderer>();
-        marioAnimator.SetBool("onGround", onGroundState);
-        // SceneManager.activeSceneChanged += SetStartingPosition;
-        Debug.Log("PlayerMovement Start called");
+        // Only add the restart listener in Start, not Awake
+        GameManager.instance.gameRestart.AddListener(ResetGame);
     }
 
     // public void SetStartingPosition(Scene current, Scene next)
@@ -135,24 +134,29 @@ public class PlayerMovement : MonoBehaviour
     }
     public void ResetGame()
     {
-        // Ensure the player is alive
+        // Ensure the player is alive first
         alive = true;
+
+        // Stop all animations and reset animator
+        marioAnimator.Rebind();
+        marioAnimator.Update(0f);
 
         // reset position
         marioBody.transform.position = new Vector3(-5.33f, -2.36f, 0.0f);
+
         // reset sprite direction
         faceRightState = true;
         marioSprite.flipX = false;
 
-        // reset animation
-        marioAnimator.SetTrigger("gameRestart");
+        // Set the correct animation state
+        onGroundState = true;
+        marioAnimator.SetBool("onGround", true);
 
         // reset camera position
         gameCamera.position = new Vector3(0, 0, -10);
 
         // Ensure time scale is set
         Time.timeScale = 1.0f;
-        Debug.Log("PlayerMovement ResetGame called, set Time.timeScale = " + Time.timeScale);
     }
 
     void FlipMarioSprite(int value)
