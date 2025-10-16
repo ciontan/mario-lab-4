@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5940093925814525821}
   - component: {fileID: 4158529530489599386}
   - component: {fileID: 1555097726110674524}
-  - component: {fileID: 6245125413747451666}
   - component: {fileID: 5350168901377023088}
   m_Layer: 0
   m_Name: Coin
@@ -101,7 +100,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1389042195643733043}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 388f46e0973f74976b88e44542b56d80, type: 2}
   m_CullingMode: 0
@@ -115,20 +114,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &6245125413747451666
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1389042195643733043}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5ec846e0846240f68b802cbbc469e47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Coin
-  jumpHeight: 1
-  jumpDuration: 0.5
 --- !u!114 &5350168901377023088
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,7 +121,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1389042195643733043}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 82053197eb8760049bb2edfc524b7960, type: 3}
   m_Name: 

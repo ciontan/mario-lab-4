@@ -7,7 +7,8 @@ public class BoxBrick : MonoBehaviour
     [SerializeField] private LayerMask playerMask;  // layer for Mario
 
     [SerializeField] private Sprite usedSprite;     // sprite for after box is used
-    [SerializeField] private GameObject coinPrefab; // prefab to spawn
+    public BasePowerup powerup; // reference to the coin powerup
+    public GameObject coinPrefab; // reference to the coin prefab
 
     private SpriteRenderer sr;
     private Rigidbody2D rb;
@@ -59,10 +60,26 @@ public class BoxBrick : MonoBehaviour
         if (usedSprite != null)
             sr.sprite = usedSprite;
 
-        // Spawn coin prefab
-        if (coinPrefab != null)
+        // Prefer powerup system
+        if (powerup != null && powerup.powerupType == PowerupType.Coin && !powerup.hasSpawned)
         {
-            // Calculate spawn position 1 unit above the box
+            // Set the GameManager reference
+            CoinPowerup coinPowerup = powerup as CoinPowerup;
+            if (coinPowerup != null)
+            {
+                coinPowerup.gameManager = gameManager;
+            }
+
+            // Enable and spawn the powerup
+            if (!powerup.gameObject.activeSelf)
+            {
+                powerup.gameObject.SetActive(true);
+            }
+            powerup.SpawnPowerup();
+        }
+        // Fallback to prefab system if no powerup
+        else if (coinPrefab != null)
+        {
             Vector3 localSpawnPos = new Vector3(0, 1f, 0);
             Vector3 spawnPosition = transform.TransformPoint(localSpawnPos);
             Debug.Log($"Box position: {transform.position}, Spawn position: {spawnPosition}");
@@ -82,8 +99,14 @@ public class BoxBrick : MonoBehaviour
     {
         used = false;
         if (sr != null && usedSprite != null)
-            sr.sprite = usedSprite; 
+            sr.sprite = usedSprite;
         if (rb != null)
             rb.bodyType = RigidbodyType2D.Dynamic;
+
+        // Reset the powerup if it exists
+        if (powerup != null)
+        {
+            powerup.ResetPowerup();
+        }
     }
 }

@@ -9,6 +9,7 @@ public class QuestionBox : MonoBehaviour
     [SerializeField] private Sprite usedSprite;     // sprite for after box is used
     [SerializeField] private Sprite unusedSprite;   // sprite for before box is used
     [SerializeField] private GameObject coinPrefab; // prefab to spawn
+    public BasePowerup powerup; // reference to the powerup (coin)
 
     private SpriteRenderer sr;
     private Rigidbody2D rb;
@@ -60,21 +61,22 @@ public class QuestionBox : MonoBehaviour
         if (usedSprite != null)
             sr.sprite = usedSprite;
 
-        // Spawn coin prefab
-        if (coinPrefab != null)
+        // Spawn coin powerup
+        if (powerup != null && powerup.powerupType == PowerupType.Coin && !powerup.hasSpawned)
         {
-            // Calculate spawn position 1 unit above the question box
-            Vector3 localSpawnPos = new Vector3(0, 1f, 0);
-            Vector3 spawnPosition = transform.TransformPoint(localSpawnPos);
-            Debug.Log($"Box position: {transform.position}, Spawn position: {spawnPosition}");
-            GameObject coinObj = Instantiate(coinPrefab, spawnPosition, Quaternion.identity);
-            Coin coinScript = coinObj.GetComponent<Coin>();
-            if (coinScript != null)
-                coinScript.Animate();
-            // Increase score and specify it's from a coin (true)
-            gameManager.IncreaseScore(1, true);
-            Destroy(coinObj, 1f); // coin disappears after 1s
+            // Get or add the GameManager reference to the coin
+            CoinPowerup coinPowerup = powerup as CoinPowerup;
+            if (coinPowerup != null)
+            {
+                coinPowerup.gameManager = gameManager;
+            }
 
+            // Enable and spawn the powerup
+            if (!powerup.gameObject.activeSelf)
+            {
+                powerup.gameObject.SetActive(true);
+            }
+            powerup.SpawnPowerup();
         }
 
         // After a short moment, disable the joint by making this RB static (as per checkoff tip)
