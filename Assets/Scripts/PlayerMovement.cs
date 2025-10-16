@@ -7,10 +7,14 @@ using TMPro;
 // public class PlayerMovement : Singleton<PlayerMovement>
 public class PlayerMovement : MonoBehaviour
 {
-    public float speed = 70;
-
-    public float maxSpeed = 80;
-    public float jumpForce = 30f;
+    public GameConstants gameConstants;
+    //float deathImpulse;
+    //float upSpeed;
+    //float maxSpeed;
+    //float speed;
+    public float speed;
+    public float maxSpeed;
+    public float jumpForce;
     public float holdForce = 10f;
     public float maxJumpVelocity = 20f;
     // Removed unused isJumping field
@@ -31,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
     [System.NonSerialized]
     public bool alive = true;
     public AudioSource marioDeathAudio;
-    public float deathImpulse = 15;
+    public float deathImpulse;
     private bool moving = false;
     private bool jumpedState = false;
     public Transform gameCamera;
@@ -42,18 +46,22 @@ public class PlayerMovement : MonoBehaviour
     void Awake()
     {
         // base.Awake();
-        GameManager.instance.gameRestart.AddListener(ResetGame);
+        marioBody = GetComponent<Rigidbody2D>();
+        marioSprite = GetComponent<SpriteRenderer>();
+        marioAnimator.SetBool("onGround", onGroundState);
     }
 
     void Start()
     {
+        // Set constants
+        speed = gameConstants.speed;
+        maxSpeed = gameConstants.maxSpeed;
+        deathImpulse = gameConstants.deathImpulse;
+        jumpForce = gameConstants.upSpeed;
         // Set to be 30 FPS
         Application.targetFrameRate = 30;
-        marioBody = GetComponent<Rigidbody2D>();
-        marioSprite = GetComponent<SpriteRenderer>();
-        marioAnimator.SetBool("onGround", onGroundState);
-        // SceneManager.activeSceneChanged += SetStartingPosition;
-        Debug.Log("PlayerMovement Start called");
+        // Only add the restart listener in Start, not Awake
+        GameManager.instance.gameRestart.AddListener(ResetGame);
     }
 
     // public void SetStartingPosition(Scene current, Scene next)
@@ -82,31 +90,38 @@ public class PlayerMovement : MonoBehaviour
         marioBody.AddForce(Vector2.up * deathImpulse, ForceMode2D.Impulse);
     }
 
+    // Removed death logic from OnTriggerEnter2D. Mario only dies in OnCollisionEnter2D based on collision direction.
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
-        {
-            Debug.Log("Collided with goomba!");
-            marioAnimator.Play("mario-die");
-            marioDeathAudio.PlayOneShot(marioDeathAudio.clip);
-            alive = false;
-        }
+
     }
 
     void GameOverScene()
     {
         Debug.Log("gameover scene called in playermovemetn");
         GameManager.instance.GameOver();
-
-        //// stop time
-        //Time.timeScale = 0.0f;
-        //// set gameover scene
-        //jumpOverGoomba.gameOver();
     }
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (((collisionLayerMask & (1 << col.transform.gameObject.layer)) > 0) & !onGroundState)
+        if (col.gameObject.CompareTag("Enemy"))
+        {
+            // Bounce off enemy head
+            if (col.contacts.Length > 0 && col.contacts[0].normal.y > 0.5f)
+            {
+                marioBody.AddForce(Vector2.up * (jumpForce / 2f), ForceMode2D.Impulse);
+                jumpedState = true;
+            }
+            else
+            {
+                // Mario dies if hit from the side or below
+                Debug.Log("Collided with goomba!");
+                marioAnimator.Play("mario-die");
+                marioDeathAudio.PlayOneShot(marioDeathAudio.clip);
+                alive = false;
+            }
+        }
+        else if (((collisionLayerMask & (1 << col.transform.gameObject.layer)) > 0) & !onGroundState)
         {
             onGroundState = true;
             // update animator state
@@ -135,24 +150,29 @@ public class PlayerMovement : MonoBehaviour
     }
     public void ResetGame()
     {
-        // Ensure the player is alive
+        // Ensure the player is alive first
         alive = true;
+
+        // Stop all animations and reset animator
+        marioAnimator.Rebind();
+        marioAnimator.Update(0f);
 
         // reset position
         marioBody.transform.position = new Vector3(-5.33f, -2.36f, 0.0f);
+
         // reset sprite direction
         faceRightState = true;
         marioSprite.flipX = false;
 
-        // reset animation
-        marioAnimator.SetTrigger("gameRestart");
+        // Set the correct animation state
+        onGroundState = true;
+        marioAnimator.SetBool("onGround", true);
 
         // reset camera position
         gameCamera.position = new Vector3(0, 0, -10);
 
         // Ensure time scale is set
         Time.timeScale = 1.0f;
-        Debug.Log("PlayerMovement ResetGame called, set Time.timeScale = " + Time.timeScale);
     }
 
     void FlipMarioSprite(int value)

@@ -17,10 +17,14 @@ public class HUDManager : MonoBehaviour
     };
 
     public GameObject scoreText;
-    public Transform restartButton;
+    public GameObject restartButtonObj;
+    public GameObject pauseButtonObj;
 
     public GameObject gameOverPanel;
     // public override void Awake()
+    
+    public GameObject highscoreText;
+    public IntVariable gameScore;
     void Awake()
     {
         // base.Awake();
@@ -56,14 +60,16 @@ public class HUDManager : MonoBehaviour
 
         // Force the UI elements back to their original positions with ForceLayoutImmediateRecursively
         scoreText.transform.localPosition = scoreTextPosition[0];
-        restartButton.localPosition = restartButtonPosition[0];
+        restartButtonObj.transform.localPosition = restartButtonPosition[0];
+        if (restartButtonObj != null) restartButtonObj.SetActive(true);
+        if (pauseButtonObj != null) pauseButtonObj.SetActive(true);
 
         // Force immediate layout update to ensure positions are applied
         Canvas.ForceUpdateCanvases();
 
         // Log positions for debugging
         Debug.Log("GameStart: Score position set to " + scoreText.transform.localPosition);
-        Debug.Log("GameStart: Button position set to " + restartButton.localPosition);
+        Debug.Log("GameStart: Button position set to " + restartButtonObj.transform.localPosition);
 
         // Make sure time scale is running
         Time.timeScale = 1.0f;
@@ -80,6 +86,12 @@ public class HUDManager : MonoBehaviour
     {
         gameOverPanel.SetActive(true);
         scoreText.transform.localPosition = scoreTextPosition[1];
-        restartButton.localPosition = restartButtonPosition[1];
+        restartButtonObj.transform.localPosition = restartButtonPosition[1];
+        if (restartButtonObj != null) restartButtonObj.SetActive(false);
+        if (pauseButtonObj != null) pauseButtonObj.SetActive(false);
+        // set highscore
+        highscoreText.GetComponent<TextMeshProUGUI>().text = "TOP- " + gameScore.previousHighestValue.ToString("D6");
+        // show
+        highscoreText.SetActive(true);
     }
 }

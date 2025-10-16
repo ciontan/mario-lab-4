@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -13,6 +15,7 @@ public class GameManager : Singleton<GameManager>
 
     private int score = 0;
     private CoinAudioController coinAudioController;
+    public IntVariable gameScore;
 
     public override void Awake()
     {
@@ -21,8 +24,10 @@ public class GameManager : Singleton<GameManager>
 
     void Start()
     {
-        Time.timeScale = 1.0f;
 
+        gameStart.Invoke();
+        Time.timeScale = 1.0f;
+        SceneManager.activeSceneChanged += SceneSetup;
         // Get or add CoinAudioController
         coinAudioController = GetComponent<CoinAudioController>();
         if (coinAudioController == null)
@@ -30,9 +35,30 @@ public class GameManager : Singleton<GameManager>
             coinAudioController = gameObject.AddComponent<CoinAudioController>();
             Debug.Log("Added CoinAudioController to GameManager");
         }
-
-        gameStart.Invoke();
     }
+
+    public void SceneSetup(Scene current, Scene next)
+    {
+        // Wait for next frame to ensure new scene is fully loaded
+        StartCoroutine(SetupNewScene());
+    }
+
+    private IEnumerator SetupNewScene()
+    {
+        // Wait for the next frame to ensure new scene objects are initialized
+        yield return null;
+
+        // Find and setup the new HUD
+        var hud = FindFirstObjectByType<HUDManager>();
+        if (hud != null)
+        {
+            // Force a score update
+            SetScore(score);
+            // Trigger game start to setup UI positions
+            gameStart.Invoke();
+        }
+    }
+
 
     // Update is called once per frame
     void Update()
@@ -44,11 +70,28 @@ public class GameManager : Singleton<GameManager>
     {
         // reset score
         score = 0;
+        gameScore.Value = 0;
         SetScore(score);
 
         // Reset coin audio
         if (coinAudioController != null)
             coinAudioController.ResetCoinCount();
+
+        // Reset all QuestionBoxPowerupControllers
+        foreach (var box in FindObjectsByType<QuestionBoxPowerupController>(FindObjectsSortMode.None))
+        {
+            box.ResetBox();
+        }
+        // Reset all BoxBricks
+        foreach (var brick in FindObjectsByType<BoxBrick>(FindObjectsSortMode.None))
+        {
+            brick.ResetBox();
+        }
+        // Reset all MagicMushroomPowerups
+        foreach (var mushroom in FindObjectsByType<MagicMushroomPowerup>(FindObjectsSortMode.None))
+        {
+            mushroom.ResetPowerup();
+        }
 
         gameRestart.Invoke();
         Time.timeScale = 1.0f;
@@ -57,7 +100,9 @@ public class GameManager : Singleton<GameManager>
     // Use this overload to specify if the score increase is from a coin
     public void IncreaseScore(int increment, bool isCoin = false)
     {
+        Debug.Log("increasing score by " + increment);
         score += increment;
+        gameScore.ApplyChange(1);
 
         // Play coin sound only if it's from a coin
         if (isCoin && coinAudioController != null)
@@ -70,6 +115,7 @@ public class GameManager : Singleton<GameManager>
 
     public void SetScore(int score)
     {
+        //scoreChange.Invoke(gameScore.Value);
         scoreChange.Invoke(score);
     }
 

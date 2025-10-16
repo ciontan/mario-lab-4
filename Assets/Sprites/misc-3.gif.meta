@@ -703,7 +703,7 @@ TextureImporter:
         width: 40
         height: 80
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -712,6 +712,94 @@ TextureImporter:
       bones: []
       spriteID: 1e5f740d53ef44505b2f0f06b7f624a8
       internalID: -697545454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Magic-mushroom
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 1193
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c6c70a5b053cc48d691e99233a7c89df
+      internalID: -728817919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 1-up-mushroom
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 1193
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ae7d625e394349408dceab31786cf5e
+      internalID: -1540648708
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Starman
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 1133
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e06eee6b40ff4889be6202427a55ff2
+      internalID: 1297864564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goomba-flat
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 343
+        width: 17
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc680cb9adc984b4cbba7ad9ab692aa9
+      internalID: -425582989
       vertices: []
       indices: 
       edges: []
@@ -730,6 +818,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
+      1-up-mushroom: -1540648708
       Bricks: 1135496316
       Bush_1: -691826590
       Bush_2: -172425708
@@ -737,9 +826,11 @@ TextureImporter:
       Cloud_1: 539693362
       Cloud_2: 1709897791
       Cloud_3: 1075318036
+      Goomba-flat: -425582989
       Goomba_left: -480114516
       Goomba_right: -1204056370
       Ground: -462428925
+      Magic-mushroom: -728817919
       Mountain_big: 893077068
       Mountain_small: 497750586
       OneWay: 1618038367
@@ -749,6 +840,7 @@ TextureImporter:
       Pipe_exten: 1763963889
       Pipe_extend: 1763963889
       Question_box: -1225447665
+      Starman: 1297864564
       castle: -600136666
       castle-right: -697545454
       coin_1: 225708265

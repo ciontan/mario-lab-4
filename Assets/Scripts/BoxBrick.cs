@@ -77,4 +77,13 @@ public class BoxBrick : MonoBehaviour
 
         yield return null;
     }
+
+    public void ResetBox()
+    {
+        used = false;
+        if (sr != null && usedSprite != null)
+            sr.sprite = usedSprite; 
+        if (rb != null)
+            rb.bodyType = RigidbodyType2D.Dynamic;
+    }
 }
